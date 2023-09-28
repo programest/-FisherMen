@@ -16,7 +16,7 @@ function Game() {
     
   return (
     <div className="game__container">
-       <Stage  raf={false} height={1920}  width={1920}   renderOnComponentChange={true} options={{ backgroundColor: '0xeef1f5', antialias: true }}  >
+       <Stage  height={1920}  width={1920}     >
         
        <Sprite
         image={BC}
