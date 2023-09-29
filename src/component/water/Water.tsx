@@ -18,7 +18,7 @@ const Water: FC<WaterItem> = ({ refWater }) => {
             image={WaterIMG}
             x={0}
             width={1000}
-            y={300}
+            y={350}
             height={200}
             anchor={{ x: 0.5, y: 0.5 }}
         />

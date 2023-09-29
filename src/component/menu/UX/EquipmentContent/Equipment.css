@@ -1,0 +1,147 @@
+.inventory__block{
+    position: fixed;
+   
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inventory__content{
+ 
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 70%;
+    height: 70%;
+}
+.inventory-close {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 44px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .inventory-wrap{
+    
+    display: flex;
+    justify-content: space-between;
+  }
+  .-disabled{
+    opacity: 0.7;
+  }
+  .cell__buttons{
+    display: flex;
+  }
+  .cell-btn{
+    
+    cursor: pointer;
+    background-color: transparent;
+    padding-top: 10px !important;
+    border-radius: 4px;
+    border: 2px solid rgb(45, 51, 49);
+    margin-right: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+  }
+  .active-checkmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #00ff00; /* Цвет галочки */
+    border-radius: 3px;
+    transition: transform 0.2s ease-in-out; /* Анимация при клике */
+  }
+  
+  /* Стили для рисования галочки */
+  .active-checkmark::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: 10%;
+    width: 18px;
+    height: 5px;
+    border: 2px solid #00ff00; /* Цвет галочки */
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    transition: opacity 0.2s ease-in-out; /* Анимация при клике */
+    opacity: 1;
+  }
+  .cell-btn-text{
+    font-family: 'Minecraftia-Regular', cursive;
+    font-size: 18px;
+    
+  }
+  .cell{
+    margin-bottom: 20px;
+    margin-right: 20px;
+    background-color: rgb(45, 51, 49);
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    position: relative;
+  }
+  .cell__num{
+    color: antiquewhite;
+    font-size: 17px;
+    font-weight: 700;
+    bottom: -3px;
+    right: 10px;
+    position: absolute;
+  }
+  .cell__img{
+    width: 60px;
+    height: 60px;
+    
+  }
+  .avatar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .column__cell{
+    display: flex;
+    margin-right: 30px;
+    flex-wrap: wrap;
+   
+  }
+  .avatar-cell{
+    margin-bottom: 10px;
+  }
+  .player__img{
+    width: 100px;
+    height: 100px;
+  }
+  .avatar__inventory{
+    display: flex;
+    flex-direction: column;
+
+  }
+  .avatar__player{
+    width: 200px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .avatar__img{
+    width: 100%;
+    height: 100%;
+  }

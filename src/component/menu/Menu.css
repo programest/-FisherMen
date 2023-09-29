@@ -1,0 +1,17 @@
+.menu{
+    display: flex;   
+    margin: 10px 0 40px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(44, 42, 42);
+}
+.menu__item{
+    min-width: 250px;
+    margin-right: 40px;
+    height: 50px;
+    cursor: pointer;
+
+}
+.menu__item-text{
+    font-size: 23px;
+    font-weight: 700;
+}

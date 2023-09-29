@@ -23,7 +23,7 @@ const Audio: FC = () => {
 
     return (
         <div className="container">
-            <input type="file" />
+            {/* <input type="file" /> */}
             <audio ref={audioRef} src={audio} autoPlay={sound} />
             <div className="audio__block">
                 <img src={soundImg} alt="" onClick={PlayOrStop} />

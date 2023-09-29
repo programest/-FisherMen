@@ -8,6 +8,7 @@ import { Spring } from '@react-spring/web';
 
 interface PlayerItem{
   refWater: any,
+  modal: boolean
 }
 interface NewPoint {
   x: number,
@@ -21,7 +22,7 @@ interface Point2 {
   height: number;
   y: number;
 }
-const Player: FC<PlayerItem> = ({ refWater }) => {
+const Player: FC<PlayerItem> = ({ refWater, modal }) => {
   const [positionFloat, setPositionFloat] = useState<NewPoint>(new Point(-40, 15));
   const [animationRod, setAnimationRod] = useState<boolean>(false)
   const [positionRod, setPositionRod] = useState<NewPoint>(new Point(-40, 0));
@@ -29,19 +30,19 @@ const Player: FC<PlayerItem> = ({ refWater }) => {
   const [position, setPosition] = useState<NewPoint>(new Point(1000, 240)); // Используем Point для задания начальной позиции
   const [isJumping, setIsJumping] = useState<boolean>(false);
 
-
+  
 
   const handleKeyPress = useCallback((e: KeyboardEvent | MouseEvent) => {
     const screenWidth = window.innerWidth; // Ширина монитора
     const screenHeight = window.innerHeight; // Высота монитора
-    console.log(screenHeight)
-   
-    if (e instanceof KeyboardEvent) {
+    if(!modal){
+  
+      if (e instanceof KeyboardEvent) {
       // Check if the event is a KeyboardEvent
       if (e.key === 'ArrowRight' && position.x + 40 < screenWidth) {
         setPosition((prevPosition) => new Point(prevPosition.x + 10, prevPosition.y));
       } else if (e.key === 'ArrowLeft' && position.x - 10 >= 0) {
-        const nextPlayerPosition = new Point(position.x - 10, position.y);
+        const nextPlayerPosition = (prevPosition: any) => new Point(prevPosition.x - 10, prevPosition.y)
         if (!isColliding(position, refWater.current)) {
           setPosition(nextPlayerPosition);
         }
@@ -65,12 +66,13 @@ const Player: FC<PlayerItem> = ({ refWater }) => {
           setPosition((prevPosition) => new Point(prevPosition.x, newPositionY));
         }
       }
-    } else if (e instanceof MouseEvent && e.button === 0) {
+      } else if (e.type === 'click' && e.button === 0) {
       // Check if the event is a MouseEvent with a left mouse button click
       // Handle your mouse click logic here
       setAnimationRod((prev) => !prev);
+      }   
     }
-  }, [position, isJumping]);
+  }, [isJumping, modal]);
 
 
   const isColliding = (point1:NewPoint , point2: Point2) => {
@@ -87,14 +89,20 @@ const Player: FC<PlayerItem> = ({ refWater }) => {
     );
   };
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    {animationRod &&  setAnimationRod(false)}  
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [handleKeyPress,  window.addEventListener('mouseup', handleKeyPress)]);
+    if (!modal){
+      window.addEventListener('keydown', handleKeyPress);
+      window.addEventListener('click', handleKeyPress)
+      {animationRod &&  setAnimationRod(false)}  
+      return () => {
+        window.addEventListener('click', handleKeyPress)
+        window.removeEventListener('keydown', handleKeyPress);
+      };
+    }
+   
+  }, [handleKeyPress, position, modal]);
 
   useEffect(() => {
+    if(!modal){
     let jumpInterval: NodeJS.Timeout;
   
     if (isJumping) {
@@ -110,18 +118,19 @@ const Player: FC<PlayerItem> = ({ refWater }) => {
     return () => {
       clearInterval(jumpInterval);
     };
-  }, [isJumping]);
+  }
+  }, [isJumping, modal]);
 
   const [drawFishingLine, setDrawFishingLine] = useState(false);
   const [a, setA] = useState(false)
-
+ 
 
   
   useTick((delta) => {
-    if (animationRod && !a) {
+    if (animationRod && !a && !modal) {
       // Если анимация удочки включена, выполните анимацию
       // Здесь можно реализовать логику анимации запрокидывания и возвращения удочки
-  
+      
       // Пример анимации удочки (просто для иллюстрации)
       if (positionRod.y < -30 ) {
         // Удочка вышла за пределы экрана, возвращаем ее
@@ -140,7 +149,7 @@ const Player: FC<PlayerItem> = ({ refWater }) => {
         setPositionRod((prevPosition) => new Point(5, newY));
         setPositionFloat((prevPosition) => new Point(prevPosition.x - 300, prevPosition.y + 300));
       }
-    }else if (!animationRod){
+    }else if (!animationRod && !modal){
       setA(false)
       setPositionFloat((prevPosition) => new Point(-40  * delta, 15));
       setPositionRod((prevPosition) => new Point(-40  * delta, 0));
